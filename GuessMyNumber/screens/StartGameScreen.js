@@ -2,21 +2,19 @@ import { useState } from 'react';
 
 import {
 	Alert,
-	Dimensions,
 	KeyboardAvoidingView,
 	ScrollView,
 	StyleSheet,
-	Text,
 	TextInput,
-	View,
 	useWindowDimensions,
+	View,
 } from 'react-native';
 
 import Card from '../components/ui/Card.js';
-import PrimaryButton from '../components/ui/PrimaryButton.js';
-import Title from '../components/ui/Title.js';
 import Colors from '../utils/Colors.js';
 import InstructionText from '../components/ui/InstructionText.js';
+import PrimaryButton from '../components/ui/PrimaryButton.js';
+import Title from '../components/ui/Title.js';
 
 function StartGameScreen({ onGameStart }) {
 	const [enteredNumber, setEnteredNumber] = useState('');
@@ -51,7 +49,7 @@ function StartGameScreen({ onGameStart }) {
 
 		onGameStart(enteredNumber);
 	}
-	const marginTopDistance = height < 380 ? 0 : 0;
+	const marginTopDistance = height < 380 ? 0 : 64;
 
 	return (
 		<ScrollView style={styles.screen}>
@@ -98,8 +96,6 @@ function StartGameScreen({ onGameStart }) {
 
 export default StartGameScreen;
 
-// const deviceHeight = Dimensions.get('window').height;
-
 const styles = StyleSheet.create({
 	buttonContainer: {
 		flex: 1,
@@ -126,7 +122,6 @@ const styles = StyleSheet.create({
 	rootContainer: {
 		alignItems: 'center',
 		flex: 1,
-		// marginTop: deviceHeight < 380 ? 30 : -40,
 		justifyContent: 'center',
 		alignContent: 'center',
 	},

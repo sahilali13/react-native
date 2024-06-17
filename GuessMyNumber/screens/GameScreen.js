@@ -4,8 +4,8 @@ import {
 	Alert,
 	FlatList,
 	StyleSheet,
-	View,
 	useWindowDimensions,
+	View,
 } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';

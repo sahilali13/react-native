@@ -24,8 +24,8 @@ export default function App() {
 	const [numberOfRounds, setNumberOfRounds] = useState(0);
 
 	const [fontsLoaded, fontError] = useFonts({
-		open_sans: OpenSans_400Regular,
-		open_sans_bold: OpenSans_700Bold,
+		'open-sans': OpenSans_400Regular,
+		'open-sans-bold': OpenSans_700Bold,
 	});
 
 	const onLayoutRootView = useCallback(async () => {
@@ -38,14 +38,14 @@ export default function App() {
 		return null;
 	}
 
-	function startGameHandler(pickedNumber) {
-		setUserNumber(pickedNumber);
-		setGameIsOver(false);
-	}
-
 	function gameOverHandler(numberOfRounds) {
 		setGameIsOver(true);
 		setNumberOfRounds(numberOfRounds);
+	}
+
+	function startGameHandler(pickedNumber) {
+		setUserNumber(pickedNumber);
+		setGameIsOver(false);
 	}
 
 	function startNewGameHandler() {

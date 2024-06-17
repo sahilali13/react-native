@@ -1,5 +1,4 @@
 import {
-	Dimensions,
 	Image,
 	StyleSheet,
 	Text,
@@ -53,8 +52,6 @@ function GameOverScreen({ numberOfRounds, userNumber, onStartNewGame }) {
 }
 export default GameOverScreen;
 
-const deviceWidth = Dimensions.get('window').width;
-
 const styles = StyleSheet.create({
 	highlight: {
 		color: Colors.primary500,
@@ -77,7 +74,7 @@ const styles = StyleSheet.create({
 		padding: 24,
 	},
 	summaryText: {
-		fontFamily: 'OpenSans_400Regular',
+		fontFamily: 'open-sans',
 		fontSize: 24,
 		marginBottom: 24,
 		textAlign: 'center',

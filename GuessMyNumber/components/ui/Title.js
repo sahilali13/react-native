@@ -9,7 +9,7 @@ export default Title;
 const styles = StyleSheet.create({
 	title: {
 		borderColor: 'white',
-		borderWidth: Platform.OS === 'android ? 2 : 0',
+		borderWidth: Platform.OS === 'android' ? 2 : 0,
 		color: 'white',
 		fontSize: 24,
 		fontFamily: 'open-sans-bold',
