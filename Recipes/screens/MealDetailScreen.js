@@ -1,3 +1,4 @@
+import { useLayoutEffect } from 'react';
 import {
 	Button,
 	FlatList,
@@ -9,25 +10,29 @@ import {
 } from 'react-native';
 
 import { MEALS } from '../data/dummy-data';
+
 import MealDetails from '../components/MealDetails';
 import Subtitle from '../components/MealDetail/Subtitle';
 import List from '../components/MealDetail/List';
-import { useLayoutEffect } from 'react';
+import IconButton from '../components/IconButton';
 
 function MealDetailScreen({ route, navigation }) {
 	const mealId = route.params.mealId;
 
 	const selectedMeal = MEALS.find((meal) => meal.id === mealId);
 
-	function headerButtonPressHandler() {}
+	function headerButtonPressHandler() {
+		console.log('press');
+	}
 
 	useLayoutEffect(() => {
 		navigation.setOptions({
 			headerRight: () => {
 				return (
-					<Button
-						title='Tap Me'
+					<IconButton
 						onPress={headerButtonPressHandler}
+						icon='star'
+						color='white'
 					/>
 				);
 			},
