@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
+
 export default function Subtitle({ children }) {
 	return (
 		<View style={[styles.subtitleContainter]}>
@@ -8,17 +9,17 @@ export default function Subtitle({ children }) {
 }
 
 const styles = StyleSheet.create({
-	subtitle: {
-		fontSize: 18,
-		color: '#e2b497',
-		fontWeight: 'bold',
-		textAlign: 'center',
-	},
 	subtitleContainter: {
 		borderBottomColor: '#e2b497',
 		borderBottomWidth: 2,
+		marginHorizontal: 12,
 		marginVertical: 4,
 		padding: 6,
-		marginHorizontal: 12,
+	},
+	subtitle: {
+		color: '#e2b497',
+		fontSize: 18,
+		fontWeight: 'bold',
+		textAlign: 'center',
 	},
 });

@@ -1,28 +1,32 @@
 import { useLayoutEffect } from 'react';
-import {
-	Button,
-	FlatList,
-	Image,
-	ScrollView,
-	StyleSheet,
-	Text,
-	View,
-} from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+
+import { useDispatch, useSelector } from 'react-redux';
 
 import { MEALS } from '../data/dummy-data';
-
 import MealDetails from '../components/MealDetails';
 import Subtitle from '../components/MealDetail/Subtitle';
 import List from '../components/MealDetail/List';
 import IconButton from '../components/IconButton';
+import { addFavorite, removeFavorite } from '../store/favorites';
 
 function MealDetailScreen({ route, navigation }) {
+	const favoriteMealIds = useSelector((state) => state.favoriteMeals.ids);
+
+	const dispatch = useDispatch();
+
 	const mealId = route.params.mealId;
 
 	const selectedMeal = MEALS.find((meal) => meal.id === mealId);
 
-	function headerButtonPressHandler() {
-		console.log('press');
+	const mealIsFavorite = favoriteMealIds.includes(mealId);
+
+	function changeFavoriteStatusHandler() {
+		if (mealIsFavorite) {
+			dispatch(removeFavorite({ id: mealId }));
+		} else {
+			dispatch(addFavorite({ id: mealId }));
+		}
 	}
 
 	useLayoutEffect(() => {
@@ -30,14 +34,14 @@ function MealDetailScreen({ route, navigation }) {
 			headerRight: () => {
 				return (
 					<IconButton
-						onPress={headerButtonPressHandler}
-						icon='star'
 						color='white'
+						icon={mealIsFavorite ? 'star' : 'star-outline'}
+						onPress={changeFavoriteStatusHandler}
 					/>
 				);
 			},
 		});
-	}, [navigation, headerButtonPressHandler]);
+	}, [navigation, changeFavoriteStatusHandler]);
 
 	return (
 		<ScrollView style={[styles.root]}>
@@ -71,15 +75,15 @@ export default MealDetailScreen;
 const styles = StyleSheet.create({
 	root: { marginBottom: 32 },
 	image: {
-		width: '100%',
 		height: 350,
+		width: '100%',
 	},
 	title: {
+		color: 'white',
 		fontWeight: 'bold',
 		fontSize: 24,
 		margin: 8,
 		textAlign: 'center',
-		color: 'white',
 	},
 	listOuterCotainer: {
 		alignItems: 'center',

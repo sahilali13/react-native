@@ -1,15 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-
+import { SafeAreaView, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
+import { Provider } from 'react-redux';
+
+import { StatusBar } from 'expo-status-bar';
+import { Ionicons } from '@expo/vector-icons';
 
 import CategoriesScreen from './screens/CategoriesScreen';
 import MealsOverviewScreen from './screens/MealsOverviewScreen';
 import MealDetailScreen from './screens/MealDetailScreen';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import FavoritesScreen from './screens/FavoritesScreen';
-import { Ionicons } from '@expo/vector-icons';
+
+import { store } from './store/store';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -21,7 +25,6 @@ function DrawerNavigator() {
 				name='Categories'
 				component={CategoriesScreen}
 				options={{
-					title: 'All Categories',
 					drawerIcon: ({ color, size }) => (
 						<Ionicons
 							name='list'
@@ -29,13 +32,13 @@ function DrawerNavigator() {
 							size={size}
 						/>
 					),
+					title: 'All Categories',
 				}}
 			/>
 			<Drawer.Screen
-				name='Favorites Screen'
 				component={FavoritesScreen}
+				name='Favorites Screen'
 				options={{
-					title: 'Favorites',
 					drawerIcon: ({ color, size }) => (
 						<Ionicons
 							name='star'
@@ -43,6 +46,7 @@ function DrawerNavigator() {
 							size={size}
 						/>
 					),
+					title: 'Favorites',
 				}}
 			/>
 		</Drawer.Navigator>
@@ -53,48 +57,50 @@ export default function App() {
 	return (
 		<SafeAreaView style={styles.container}>
 			<StatusBar style='light' />
-			<NavigationContainer>
-				<Stack.Navigator
-					screenOptions={{
-						headerStyle: { backgroundColor: '#351401' },
-						headerTintColor: 'white',
-						contentStyle: { backgroundColor: '#3f2f25' },
-						headerBackTitleVisible: false,
-					}}
-				>
-					<Stack.Screen
-						component={DrawerNavigator}
-						name='MealsCategories'
-						options={{
-							headerShown: false,
+			<Provider store={store}>
+				<NavigationContainer>
+					<Stack.Navigator
+						screenOptions={{
+							contentStyle: { backgroundColor: '#3f2f25' },
+							headerBackTitleVisible: false,
+							headerStyle: { backgroundColor: '#351401' },
+							headerTintColor: 'white',
 						}}
-					/>
-					<Stack.Screen
-						component={MealsOverviewScreen}
-						name='MealsOverview'
-					/>
-					<Stack.Screen
-						component={MealDetailScreen}
-						name='MealDetail'
-						options={{ title: 'About the Meal' }}
-					/>
-				</Stack.Navigator>
-			</NavigationContainer>
+					>
+						<Stack.Screen
+							component={DrawerNavigator}
+							name='MealsCategories'
+							options={{
+								headerShown: false,
+							}}
+						/>
+						<Stack.Screen
+							component={MealsOverviewScreen}
+							name='MealsOverview'
+						/>
+						<Stack.Screen
+							component={MealDetailScreen}
+							name='MealDetail'
+							options={{ title: 'About the Meal' }}
+						/>
+					</Stack.Navigator>
+				</NavigationContainer>
+			</Provider>
 		</SafeAreaView>
 	);
 }
 
 const styles = StyleSheet.create({
 	drawer: {
-		headerStyle: { backgroundColor: '#351401' },
-		headerTintColor: 'white',
-		sceneContainerStyle: { backgroundColor: '#3f2f425' },
+		drawerActiveBackgroundColor: '#e4baa1',
+		drawerActiveTintColor: '#351401',
 		drawerContentStyle: { backgroundColor: '#351401' },
 		drawerInactiveTintColor: 'white',
-		drawerActiveTintColor: '#351401',
-		drawerActiveBackgroundColor: '#e4baa1',
 		drawerLabelStyle: { fontSize: 20 },
+		headerStyle: { backgroundColor: '#351401' },
+		headerTintColor: 'white',
 		headerTitleStyle: { fontSize: 24 },
+		sceneContainerStyle: { backgroundColor: '#3f2f425' },
 	},
 	container: {
 		flex: 1,

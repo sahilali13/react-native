@@ -7,3 +7,6 @@ React Native Projects
     1. Background Image with Linear Gradient
     2. Custom Buttons
     3. Responsive UI
+3. Recipes ->
+    1. Navigation
+    2. Redux
