@@ -1,17 +1,19 @@
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 
-import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
+import { StatusBar } from 'expo-status-bar';
 
 import AllExpenses from './screens/AllExpenses';
 import ManageExpense from './screens/ManageExpense';
-import RecentExpense from './screens/RecentExpense';
-import { GlobalStyles } from './constants/GlobalStyles';
+import RecentExpenses from './screens/RecentExpenses';
+
 import IconButton from './components/ui/IconButton';
+
 import ExpensesContextProvider from './store/expenses-context';
+
+import { GlobalStyles } from './constants/GlobalStyles';
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -20,14 +22,6 @@ function ExpensesOverview() {
 	return (
 		<BottomTabs.Navigator
 			screenOptions={({ navigation }) => ({
-				headerStyle: {
-					backgroundColor: GlobalStyles.colors.primary500,
-				},
-				headerTintColor: GlobalStyles.colors.primary50,
-				headerTitleStyle: {
-					fontWeight: 'bold',
-					fontSize: 28,
-				},
 				headerRight: ({ tintColor }) => (
 					<IconButton
 						color={tintColor}
@@ -35,9 +29,18 @@ function ExpensesOverview() {
 						onPress={() => {
 							navigation.navigate('ManageExpense');
 						}}
-						size={24}
+						size={36}
 					/>
 				),
+				headerRightContainerStyle: { marginTop: -6 },
+				headerStyle: {
+					backgroundColor: GlobalStyles.colors.primary500,
+				},
+				headerTintColor: GlobalStyles.colors.primary50,
+				headerTitleStyle: {
+					fontSize: 28,
+					fontWeight: 'bold',
+				},
 				tabBarActiveTintColor: GlobalStyles.colors.accent500,
 				tabBarInactiveTintColor: GlobalStyles.colors.accent950,
 				tabBarLabelStyle: { fontSize: 20, marginBottom: -8 },
@@ -47,7 +50,7 @@ function ExpensesOverview() {
 			})}
 		>
 			<BottomTabs.Screen
-				component={RecentExpense}
+				component={RecentExpenses}
 				name='RecentExpenses'
 				options={{
 					tabBarIcon: ({ color, size }) => (
@@ -115,5 +118,3 @@ export default function App() {
 		</>
 	);
 }
-
-const styles = StyleSheet.create({});

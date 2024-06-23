@@ -100,13 +100,13 @@ const DUMMY_EXPENSES = [
 ];
 
 export const ExpensesContext = createContext({
-	expenses: [],
 	addExpense: ({ amount, date, description }) => {},
 	deleteExpense: (id) => {},
+	expenses: [],
 	updateExpense: (id, { amount, date, description }) => {},
 });
 
-function expensesReducer(state, action) {
+function expensesReducer(action, state) {
 	switch (action.type) {
 		case 'ADD':
 			const id = new Date().toString() + Math.random().toString();
@@ -137,22 +137,22 @@ function ExpensesContextProvider({ children }) {
 	);
 
 	function addExpense(expenseData) {
-		dispatch({ type: 'ADD', payload: expenseData });
+		dispatch({ payload: expenseData, type: 'ADD' });
 	}
 
 	function deleteExpense(id) {
-		dispatch({ type: 'DELETE', payload: id });
+		dispatch({ payload: id, type: 'DELETE' });
 	}
 
 	function updateExpense(id, expenseData) {
-		dispatch({ type: 'UPDATE', payload: { id: id, data: expenseData } });
+		dispatch({ payload: { data: expenseData, id: id }, type: 'UPDATE' });
 	}
 
 	const value = {
-		expenses: expensesState,
 		addExpense: addExpense,
-		updateExpense: updateExpense,
+		expenses: expensesState,
 		deleteExpense: deleteExpense,
+		updateExpense: updateExpense,
 	};
 	return (
 		<ExpensesContext.Provider value={value}>

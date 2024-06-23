@@ -1,11 +1,10 @@
 import { useContext } from 'react';
-import { Text } from 'react-native';
 
-import ExpensesOutput from '../components/expenses_output/ExpensesOutput';
 import { ExpensesContext } from '../store/expenses-context';
+import ExpensesOutput from '../components/expenses_output/ExpensesOutput';
 import { getDateMinusDays } from '../utils/date';
 
-function RecentExpense() {
+function RecentExpenses() {
 	const expensesCtx = useContext(ExpensesContext);
 
 	const recentExpenses = expensesCtx.expenses.filter((expense) => {
@@ -24,4 +23,4 @@ function RecentExpense() {
 	);
 }
 
-export default RecentExpense;
+export default RecentExpenses;

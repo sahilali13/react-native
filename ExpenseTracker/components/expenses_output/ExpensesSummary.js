@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
+
 import { GlobalStyles } from '../../constants/GlobalStyles';
 
 function ExpensesSummary({ expenses, periodName }) {
@@ -20,11 +21,11 @@ export default ExpensesSummary;
 
 const styles = StyleSheet.create({
 	root: {
+		alignItems: 'center',
 		backgroundColor: GlobalStyles.colors.primary50,
 		borderRadius: 6,
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		alignItems: 'center',
 		padding: 8,
 	},
 	text: {
