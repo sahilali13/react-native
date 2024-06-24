@@ -1,4 +1,4 @@
-import { useContext, useLayoutEffect } from 'react';
+import { useContext, useLayoutEffect, useState } from 'react';
 import {
 	Keyboard,
 	StyleSheet,
@@ -12,9 +12,14 @@ import IconButton from '../components/ui/IconButton';
 import { ExpensesContext } from '../store/expenses-context';
 
 import { GlobalStyles } from '../constants/GlobalStyles';
+import { deleteExpense, storeExpense, updateExpense } from '../utils/http';
+import LoadingOverlay from '../components/ui/LoadingOverlay';
+import ErrorOverlay from '../components/ui/ErrorOverlay';
 
 function ManageExpense({ navigation, route }) {
 	const expensesCtx = useContext(ExpensesContext);
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState();
 
 	const editedExpenseId = route.params?.expenseId;
 
@@ -30,8 +35,15 @@ function ManageExpense({ navigation, route }) {
 		});
 	}, [isEditing, navigation]);
 
-	function deleteExpenseHandler() {
-		expensesCtx.deleteExpense(editedExpenseId);
+	async function deleteExpenseHandler() {
+		setIsLoading(true);
+		try {
+			await deleteExpense(editedExpenseId);
+			expensesCtx.deleteExpense(editedExpenseId);
+		} catch (error) {
+			setError("Can't delete - try again later");
+		}
+		setIsLoading(false);
 		navigation.goBack();
 	}
 
@@ -39,15 +51,41 @@ function ManageExpense({ navigation, route }) {
 		navigation.goBack();
 	}
 
-	function confirmHandler(expenseData) {
-		if (isEditing) {
-			expensesCtx.updateExpense(editedExpenseId, expenseData);
-		} else {
-			expensesCtx.addExpense(expenseData);
+	async function confirmHandler(expenseData) {
+		setIsLoading(true);
+		try {
+			if (isEditing) {
+				expensesCtx.updateExpense(editedExpenseId, expenseData);
+
+				await updateExpense(editedExpenseId, expenseData);
+			} else {
+				const id = await storeExpense(expenseData);
+
+				expensesCtx.addExpense({ ...expenseData, id: id });
+			}
+		} catch (error) {
+			setError("Can't update - Try again later");
 		}
+		setIsLoading(false);
 		navigation.goBack();
 	}
 
+	function errorHandler() {
+		setError(null);
+	}
+
+	if (error && !isLoading) {
+		return (
+			<ErrorOverlay
+				message={error}
+				onConfirm={errorHandler}
+			/>
+		);
+	}
+
+	if (isLoading) {
+		return <LoadingOverlay />;
+	}
 	return (
 		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
 			<View style={[styles.root]}>

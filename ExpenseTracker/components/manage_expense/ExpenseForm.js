@@ -24,7 +24,7 @@ function ExpenseForm({ defaultValues, onCancel, onSubmit, submitButtonLabel }) {
 		},
 	});
 
-	function inputChangeHandler(enteredValue, inputIdentifier) {
+	function inputChangeHandler(inputIdentifier, enteredValue) {
 		setInputs((curInputs) => {
 			return {
 				...curInputs,
@@ -92,7 +92,6 @@ function ExpenseForm({ defaultValues, onCancel, onSubmit, submitButtonLabel }) {
 					style={styles.rowInput}
 					textInputConfig={{
 						maxLength: 10,
-						onChangeText: () => {},
 						onChangeText: inputChangeHandler.bind(this, 'date'),
 						placeholder: 'YYYY-MM-DD',
 						value: inputs.date.value,
