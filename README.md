@@ -16,3 +16,6 @@ React Native Projects
     3. Form Input Handling
     4. Error Handling
     5. HTTP Requests through AXIOS
+5. Auth Demo ->
+    1. Firebase Authentication
+    2. Local Device Auth Storage
